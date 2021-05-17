@@ -5,7 +5,7 @@
 <br>
 时间复杂度O(n^2)
 <br>
-'''Jave
+```Java
 	public static void insertionSort(int[] arr){
 		int length = arr.length;
 		for(int i = 1; i < length; i ++){
@@ -20,12 +20,12 @@
 			}
 		}
 	}
-'''
+```
 
 ###### 优化
 上述代码中，内层循环插入操作中需要进行多次的元素值交换，每次交换需要三次赋值，还需要多次通过数组下标去访问数组元素值的操作。所以对代码进行优化，只进行一次值的交换。
 
-'''Jave
+```Java
 	public static void insertionSort(int[] arr){
 		int length = arr.length;
 		for(int i = 1; i < length; i ++){
@@ -37,7 +37,7 @@
 			arr[j] = e;
 		}
 	}
-'''
+```
 
 ###### 优点总结
 对于一个近乎有序的数组进行排序时，插入排序的效率非常高。要远远的高于选择排序，甚至比高级排序算法（O(nlogn)）的效率更高。
