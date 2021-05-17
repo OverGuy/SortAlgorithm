@@ -2,7 +2,7 @@
 当我们要排序一个数组时，归并排序会把这个数组分成两半，再单独对左边和右边的数组进行排序，之后再将它们归并起来。当然了当我们对左边和右边的数组进行排序时，再分别把左边的数组和右边的数组分成两半，然后对每一部分的数组先排序再归并。对于这每一部分的数组，我们依然是先分半再归并。<br>
 当我们分到一定粒度的时候，每一部分就只有一个元素，那么此时我们不用排序，它本身就是有序的，所以这这时候我们只需要进行归并。归并到上一个层级之后，进一步进行归并，归并到一个更高的层级，逐层的向上归并。直至归并到最后一层的时候，整个数组全部有序了。<br>
 <br>
-![](https://github.com/OverGuy/SortAlgorithm/blob/master/image/merge_thinking.png)
+![](https://github.com/OverGuy/SortAlgorithm/blob/master/image/merge_thinking.png)<br>
 上图是我们对8个元素的数组进行归并排序，一步一步划分的过程。大家可以看到一层一层的下来一共分成了3级，到第3级的时候，每一部分就只剩下一个元素了。那么这个3是怎么来的呢，我们一共有8个元素，每次分成2份，经过3次这样除以2的计算，每一部分就只剩下一个元素了，也就是 log8 = 3；如果是n个元素，那么就有logn这么多层级（当n不是2^x时，logn就是一个浮点数，只需要向上取整就行了），所以总之层数是logn数量级的。<br>
 在这种情况下，每一层要处理的元素的个数是一样的，虽然我们把它分成了不同的部分。如果每一层级的归并过程的时间复杂度是O(n)，那么我们就设计出了一个O(nlogn)级别的算法。<br>
 事实上这也是O(nlogn)时间复杂度算法的主要来源，通常是通过二分法达到了logn这样的层级，之后每一层级用O(n)级别的算法来做事情。<br>
@@ -10,12 +10,12 @@
 所以接下来的问题就变成了，我们能不能将整个数组分成两部分，之后这两部分都分别排好序，使用O(n)的算法将他们归并到一起，形成一个新的有序的数组。<br>
 这个问题的答案是可以的，我们需要开辟一个同样大小的临时空间，来辅助我们完成这个归并过程（我们设计一个算法，通常是优先考虑时间复杂度，除非有其余特定的需求）<br>
 具体的归并过程操作如下图：<br>
-![](https://github.com/OverGuy/SortAlgorithm/blob/master/image/merge_top_1.png)
-![](https://github.com/OverGuy/SortAlgorithm/blob/master/image/merge_top_2.png)
-![](https://github.com/OverGuy/SortAlgorithm/blob/master/image/merge_top_3.png)
-![](https://github.com/OverGuy/SortAlgorithm/blob/master/image/merge_top_4.png)
-![](https://github.com/OverGuy/SortAlgorithm/blob/master/image/merge_top_5.png)
-![](https://github.com/OverGuy/SortAlgorithm/blob/master/image/merge_top_6.png)
+![](https://github.com/OverGuy/SortAlgorithm/blob/master/image/merge_top_1.png)<br>
+![](https://github.com/OverGuy/SortAlgorithm/blob/master/image/merge_top_2.png)<br>
+![](https://github.com/OverGuy/SortAlgorithm/blob/master/image/merge_top_3.png)<br>
+![](https://github.com/OverGuy/SortAlgorithm/blob/master/image/merge_top_4.png)<br>
+![](https://github.com/OverGuy/SortAlgorithm/blob/master/image/merge_top_5.png)<br>
+![](https://github.com/OverGuy/SortAlgorithm/blob/master/image/merge_top_6.png)<br>
 
 归并排序的本质就是一个递归排序的过程。<br>
 时间复杂度：O(nlogn)<br>
@@ -88,7 +88,7 @@ public class MergeSort {
 ###### 优化
 1，对两个已经排好序的子数组做归并操作，可以先判断一下左边子数组最后一个元素是否小余等于右边子数组第一个元素，如果是小余等于，则不需要做本次归并操作，因为当前部分已经是有序的。这个优化能提高归并排序算法对近乎有序数组的排序效率。<br>
 2，对于近乎所有的高级排序算法，都存在一种优化情况，那就是对递归到底的优化。<br>
-当递归到元素量非常小的时候，可以转而使用插入排序，来提高性能。这是基于两个原因：一方面当元素数据比较少的时候，整个数组近乎有序的概率比较大，此时插入排序有优势。另外一方面虽然插入排序最差的时间复杂度是O(n^2)，而归并排序是O(nlogn)，但是大家要知道对于时间复杂度来说n^2和nlogn也好，前面是有一个常数系数的，对于这个系数而言插入排序是要比归并排序小的。换句话说，当n小余到一定的程度的时候，插入排序会比归并排序要快一些。<br>
+当递归到元素量非常小的时候，可以转而使用插入排序，来提高性能。这是基于两个原因：一方面当元素数据比较少的时候，整个数组近乎有序的概率比较大，此时插入排序有优势。另外一方面虽然插入排序最差的时间复杂度是O(n^2)，而归并排序是O(nlogn)，但是大家要知道对于时间复杂度来说n^2和nlogn也好，前面是有一个常数系数的，对于这个系数而言插入排序是要比归并排序小的。换句话说，当n小余到一定的程度的时候，插入排序会比归并排序要快一些。<br><br>
 第二条优化性能测试：<br>
 生成一个一百万个元素的数组，每个元素都是随机生成的[0,10000000]。在我的电脑上运行时间如下。<br>
 优化前耗时：197ms<br>
@@ -148,14 +148,14 @@ public class MergeSort {
 在这样的一个实现中，我们并不需要递归，只需要迭代就可以完成归并排序。<br><br>
 
 
-![](https://github.com/OverGuy/SortAlgorithm/blob/master/image/merge_bottom_1.png)
-![](https://github.com/OverGuy/SortAlgorithm/blob/master/image/merge_bottom_2.png)
-![](https://github.com/OverGuy/SortAlgorithm/blob/master/image/merge_bottom_3.png)
-![](https://github.com/OverGuy/SortAlgorithm/blob/master/image/merge_bottom_4.png)
-![](https://github.com/OverGuy/SortAlgorithm/blob/master/image/merge_bottom_45.png)
-![](https://github.com/OverGuy/SortAlgorithm/blob/master/image/merge_bottom_5.png)
-![](https://github.com/OverGuy/SortAlgorithm/blob/master/image/merge_bottom_6.png)
-![](https://github.com/OverGuy/SortAlgorithm/blob/master/image/merge_bottom_7.png)
+![](https://github.com/OverGuy/SortAlgorithm/blob/master/image/merge_bottom_1.png)<br>
+![](https://github.com/OverGuy/SortAlgorithm/blob/master/image/merge_bottom_2.png)<br>
+![](https://github.com/OverGuy/SortAlgorithm/blob/master/image/merge_bottom_3.png)<br>
+![](https://github.com/OverGuy/SortAlgorithm/blob/master/image/merge_bottom_4.png)<br>
+![](https://github.com/OverGuy/SortAlgorithm/blob/master/image/merge_bottom_45.png)<br>
+![](https://github.com/OverGuy/SortAlgorithm/blob/master/image/merge_bottom_5.png)<br>
+![](https://github.com/OverGuy/SortAlgorithm/blob/master/image/merge_bottom_6.png)<br>
+![](https://github.com/OverGuy/SortAlgorithm/blob/master/image/merge_bottom_7.png)<br>
 
 具体代码实现如下：<br>
 ```Java
