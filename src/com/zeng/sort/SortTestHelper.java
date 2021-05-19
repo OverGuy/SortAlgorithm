@@ -2,6 +2,13 @@ package com.zeng.sort;
 
 public class SortTestHelper {
 	
+	/**
+	 * 生成完全随机数组
+	 * @param n 数组的规模
+	 * @param rightL 数组中元素的最小值
+	 * @param rightR 数组中元素的最大值
+	 * @return
+	 */
 	public static int[] generateRandomArray(int n, int rightL, int rightR){
 		if(rightL > rightR || n < 0){
 			throw new IllegalArgumentException();
@@ -14,6 +21,12 @@ public class SortTestHelper {
 		return arr;
 	}
 	
+	/**
+	 * 生成一个近乎有序的数组
+	 * @param n 数组的规模
+	 * @param swapTimes 进行数据交换的对数
+	 * @return
+	 */
 	public static int[] generateNearlyOrderedArray(int n, int swapTimes){
 		if(n < 0 || swapTimes < 0){
 			throw new IllegalArgumentException();
