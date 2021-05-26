@@ -12,37 +12,146 @@ public class QuickSort {
 		final QuickSort quickSort = new QuickSort();
 		final MergeSort mergeSort = new MergeSort();
 		int arr[] = SortTestHelper.generateRandomArray(1000000, 0, 10000000);
-		int[] copyArr = Arrays.copyOf(arr, arr.length);
-		SortTestHelper.testSort("QuickSort", arr, new TestCallBack(){
+		int[] copyArr1 = Arrays.copyOf(arr, arr.length);
+		int[] copyArr2 = Arrays.copyOf(arr, arr.length);
+		SortTestHelper.testSort("MergeSort", arr, new TestCallBack(){
+
+			public void sort(int[] arr) {
+				// TODO Auto-generated method stub
+				mergeSort.mergeSort(arr);
+			}});
+		SortTestHelper.testSort("QuickSort", copyArr1, new TestCallBack(){
 
 			public void sort(int[] arr) {
 				// TODO Auto-generated method stub
 				quickSort.quickSort(arr);
 			}});
-		SortTestHelper.testSort("MergeSort", copyArr, new TestCallBack(){
+		SortTestHelper.testSort("QuickSort2", copyArr2, new TestCallBack(){
 
 			public void sort(int[] arr) {
 				// TODO Auto-generated method stub
-				mergeSort.mergeSort(arr);
+				quickSort.quickSort2(arr);
 			}});
 		System.out.println();
 		
 		arr = SortTestHelper.generateNearlyOrderedArray(1000000, 100);
-		copyArr = Arrays.copyOf(arr, arr.length);
-		SortTestHelper.testSort("QuickSort", arr, new TestCallBack(){
-
-			public void sort(int[] arr) {
-				// TODO Auto-generated method stub
-				quickSort.quickSort(arr);
-			}});
-		SortTestHelper.testSort("MergeSort", copyArr, new TestCallBack(){
+		copyArr1 = Arrays.copyOf(arr, arr.length);
+		copyArr2 = Arrays.copyOf(arr, arr.length);
+		SortTestHelper.testSort("MergeSort", arr, new TestCallBack(){
 
 			public void sort(int[] arr) {
 				// TODO Auto-generated method stub
 				mergeSort.mergeSort(arr);
 			}});
-	}
+		SortTestHelper.testSort("QuickSort", copyArr1, new TestCallBack(){
 
+			public void sort(int[] arr) {
+				// TODO Auto-generated method stub
+				quickSort.quickSort(arr);
+			}});
+		SortTestHelper.testSort("QuickSort2", copyArr2, new TestCallBack(){
+
+			public void sort(int[] arr) {
+				// TODO Auto-generated method stub
+				quickSort.quickSort2(arr);
+			}});
+		System.out.println();
+		
+		arr = SortTestHelper.generateRandomArray(1000000, 0, 10);
+		copyArr1 = Arrays.copyOf(arr, arr.length);
+		copyArr2 = Arrays.copyOf(arr, arr.length);
+		SortTestHelper.testSort("MergeSort", arr, new TestCallBack(){
+
+			public void sort(int[] arr) {
+				// TODO Auto-generated method stub
+				mergeSort.mergeSort(arr);
+			}});
+		SortTestHelper.testSort("QuickSort", copyArr1, new TestCallBack(){
+
+			public void sort(int[] arr) {
+				// TODO Auto-generated method stub
+				quickSort.quickSort(arr);
+			}});
+		SortTestHelper.testSort("QuickSort2", copyArr2, new TestCallBack(){
+
+			public void sort(int[] arr) {
+				// TODO Auto-generated method stub
+				quickSort.quickSort2(arr);
+			}});
+		System.out.println();
+	}
+	
+	public void quickSort2(int[] arr){
+		quickSort2(arr, 0, arr.length - 1);
+	}
+	
+	private void quickSort2(int[] arr, int left, int right){
+		if(right - left <= 15){
+			insertionSort(arr, left, right);
+			return;
+		}
+		int p = partition22(arr, left, right);
+		quickSort2(arr, left, p - 1);
+		quickSort2(arr, p + 1, right);
+	}
+	
+    // 双路快速排序的partition
+    // 返回p, 使得arr[l...p-1] < arr[p] ; arr[p+1...r] > arr[p]
+    private int partition22(int[] arr, int l, int r){
+
+        // 随机在arr[l...r]的范围中, 选择一个数值作为标定点pivot
+        swap( arr, l , (int)(Math.random()*(r-l+1))+l );
+
+        int v = arr[l];
+
+        // arr[l+1...i) <= v; arr(j...r] >= v
+        int i = l+1, j = r;
+        while( true ){
+            // 注意这里的边界, arr[i].compareTo(v) < 0, 不能是arr[i].compareTo(v) <= 0
+            // 思考一下为什么?
+            while( i <= r && arr[i] < v )
+                i ++;
+
+            // 注意这里的边界, arr[j].compareTo(v) > 0, 不能是arr[j].compareTo(v) >= 0
+            // 思考一下为什么?
+            while( j >= l+1 && arr[j] > v )
+                j --;
+
+            // 对于上面的两个边界的设定, 有的同学在课程的问答区有很好的回答:)
+            // 大家可以参考: http://coding.imooc.com/learn/questiondetail/4920.html
+
+            if( i > j )
+                break;
+
+            swap( arr, i, j );
+            i ++;
+            j --;
+        }
+
+        swap(arr, l, j);
+
+        return j;
+    }
+	
+	private int partition2(int[] arr, int left, int right){
+		//随机取一个元素和第一个元素交换位置，优化快速排序
+		swap(arr, left, (int)(Math.random() * (right - left + 1)) + left);
+		int v = arr[left];
+		//定义两个索引i和j,分别区分两个部分[left+1,i)>=v,(j,right]>=v
+		//给两个索引赋值，得到两个空的部分
+		int i = left + 1, j = right;
+		while(true){
+			while(i <= right && arr[i] < v) i++;
+			while(j >= left + 1 && arr[j] > v) j--;
+			if(i > j) break;
+			swap(arr, i, j);
+			i++;
+			j--;
+		}
+		swap(arr, left, j);
+		return j;
+	}
+	
 	public void quickSort(int[] arr){
 		quickSort(arr, 0, arr.length - 1);
 	}
@@ -73,23 +182,6 @@ public class QuickSort {
 	}
 	
 	/**
-	 * 插入排序算法，对数组中子数组[left, right]进行排序.
-	 * @param arr
-	 * @param left
-	 * @param right
-	 */
-	private void insertionSort(int[] arr, int left, int right){
-		for(int i = left + 1; i <= right; i ++){
-			int e = arr[i];
-			int j = i;
-			for(; j > left && arr[j - 1] > e; j --){
-				arr[j] = arr[j - 1];
-			}
-			arr[j] = e;
-		}
-	}
-	
-	/**
 	 * 对arr[left...right]部分进行partition操作
 	 * @param arr
 	 * @param left
@@ -97,8 +189,8 @@ public class QuickSort {
 	 * @return 返回p，使得arr[left...p-1] < arr[p]; arr[p+1...right] > arr[p]
 	 */
 	private int partition(int[] arr, int left, int right){
-		//分成了两部分[left+1, j],[j+1, i)
-		//swap(arr, left, (int)(Math.random() * (right - left + 1) + left));
+		//优化：随机化快速
+		swap(arr, left, (int)(Math.random() * (right - left + 1) + left));
 		
 		int v = arr[left];
 		//arr[left+1...j] < v; arr[j+1...i) > v
@@ -114,6 +206,23 @@ public class QuickSort {
 		swap(arr, left, j);
 		
 		return j;
+	}
+	
+	/**
+	 * 插入排序算法，对数组中子数组[left, right]进行排序.
+	 * @param arr
+	 * @param left
+	 * @param right
+	 */
+	private void insertionSort(int[] arr, int left, int right){
+		for(int i = left + 1; i <= right; i ++){
+			int e = arr[i];
+			int j = i;
+			for(; j > left && arr[j - 1] > e; j --){
+				arr[j] = arr[j - 1];
+			}
+			arr[j] = e;
+		}
 	}
 	
 	/**
