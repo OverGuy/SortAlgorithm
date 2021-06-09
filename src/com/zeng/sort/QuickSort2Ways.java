@@ -1,19 +1,24 @@
 package com.zeng.sort;
 
-public class QuickSortTwoWays {
+/**
+ * 双路快速排序
+ * @author sks
+ *
+ */
+public class QuickSort2Ways {
 	
-	public void quickSort2(int[] arr){
-		quickSort2(arr, 0, arr.length - 1);
+	public void QuickSort2Ways(int[] arr){
+		QuickSort2Ways(arr, 0, arr.length - 1);
 	}
 	
-	private void quickSort2(int[] arr, int left, int right){
+	private void QuickSort2Ways(int[] arr, int left, int right){
 		if(right - left <= 15){
 			insertionSort(arr, left, right);
 			return;
 		}
-		int p = partition2(arr, left, right);
-		quickSort2(arr, left, p - 1);
-		quickSort2(arr, p + 1, right);
+		int p = partition2Ways(arr, left, right);
+		QuickSort2Ways(arr, left, p - 1);
+		QuickSort2Ways(arr, p + 1, right);
 	}
 	
     /**
@@ -23,7 +28,7 @@ public class QuickSortTwoWays {
      * @param right
      * @return 返回值p，使得两个arr[left...p-1]<=arr[p],arr[p+1...right]>=arr[p]
      */
-	private int partition2(int[] arr, int left, int right){
+	private int partition2Ways(int[] arr, int left, int right){
 		//随机取一个元素和第一个元素交换位置，优化快速排序
 		swap(arr, left, (int)(Math.random() * (right - left + 1)) + left);
 		int v = arr[left];

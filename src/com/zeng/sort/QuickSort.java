@@ -10,11 +10,13 @@ public class QuickSort {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		final QuickSort quickSort = new QuickSort();
-		final QuickSortTwoWays quickSortTwo = new QuickSortTwoWays();
+		final QuickSort2Ways quickSortTwo = new QuickSort2Ways();
+		final QuickSort3Ways quickSortThree = new QuickSort3Ways();
 		final MergeSort mergeSort = new MergeSort();
 		int arr[] = SortTestHelper.generateRandomArray(1000000, 0, 10000000);
 		int[] copyArr1 = Arrays.copyOf(arr, arr.length);
 		int[] copyArr2 = Arrays.copyOf(arr, arr.length);
+		int[] copyArr3 = Arrays.copyOf(arr, arr.length);
 		SortTestHelper.testSort("MergeSort", arr, new TestCallBack(){
 
 			public void sort(int[] arr) {
@@ -31,13 +33,20 @@ public class QuickSort {
 
 			public void sort(int[] arr) {
 				// TODO Auto-generated method stub
-				quickSortTwo.quickSort2(arr);
+				quickSortTwo.QuickSort2Ways(arr);
+			}});
+		SortTestHelper.testSort("QuickSort3", copyArr3, new TestCallBack(){
+
+			public void sort(int[] arr) {
+				// TODO Auto-generated method stub
+				quickSortThree.quickSort3Ways(arr);
 			}});
 		System.out.println();
 		
 		arr = SortTestHelper.generateNearlyOrderedArray(1000000, 100);
 		copyArr1 = Arrays.copyOf(arr, arr.length);
 		copyArr2 = Arrays.copyOf(arr, arr.length);
+		copyArr3 = Arrays.copyOf(arr, arr.length);
 		SortTestHelper.testSort("MergeSort", arr, new TestCallBack(){
 
 			public void sort(int[] arr) {
@@ -54,13 +63,20 @@ public class QuickSort {
 
 			public void sort(int[] arr) {
 				// TODO Auto-generated method stub
-				quickSortTwo.quickSort2(arr);
+				quickSortTwo.QuickSort2Ways(arr);
+			}});
+		SortTestHelper.testSort("QuickSort3", copyArr3, new TestCallBack(){
+
+			public void sort(int[] arr) {
+				// TODO Auto-generated method stub
+				quickSortThree.quickSort3Ways(arr);
 			}});
 		System.out.println();
 		
 		arr = SortTestHelper.generateRandomArray(1000000, 0, 10);
 		copyArr1 = Arrays.copyOf(arr, arr.length);
 		copyArr2 = Arrays.copyOf(arr, arr.length);
+		copyArr3 = Arrays.copyOf(arr, arr.length);
 		SortTestHelper.testSort("MergeSort", arr, new TestCallBack(){
 
 			public void sort(int[] arr) {
@@ -77,7 +93,13 @@ public class QuickSort {
 
 			public void sort(int[] arr) {
 				// TODO Auto-generated method stub
-				quickSortTwo.quickSort2(arr);
+				quickSortTwo.QuickSort2Ways(arr);
+			}});
+		SortTestHelper.testSort("QuickSort3", copyArr3, new TestCallBack(){
+
+			public void sort(int[] arr) {
+				// TODO Auto-generated method stub
+				quickSortThree.quickSort3Ways(arr);
 			}});
 		System.out.println();
 	}
